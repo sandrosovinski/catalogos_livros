@@ -1,0 +1,42 @@
+<!DOCTYPE HTMLl>
+<html lang="en">
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+    {% extends "index.html" %}
+    {% block content %}
+    <table id="texto" border=1>
+      <tr>
+        <th>Teste
+        </th>
+      </tr>
+    </table>	    
+    <div id="menu">
+      <p>
+         Projeto 3: Catálogo de Livros com Verificação de Disponibilidade
+      </p> 
+
+      <p>
+        Neste projeto, os alunos criarão um catálogo de livros em Python. A aplicação incluirá as seguintes etapas:
+      </p>
+      <p>
+      <ul>
+	 <li>➔ Cadastro de Livros:</li>
+	   <ul>
+             <li>◆ Os usuários poderão cadastrar livros, incluindo título, autor e número de exemplares disponíveis.</li>
+	   </ul>
+	 <li>➔ Validação de Disponibilidade:</li>
+	   <ul>
+             <li>◆ A aplicação verificará se o número de exemplares disponíveis é um valor.</li>
+	   </ul>  
+         <li>➔ Pesquisa de Livros:</li>
+           <ul>
+             <li>◆ Os usuários poderão pesquisar livros por título ou autor.</li>
+             <li>◆ A aplicação exibirá os resultados da pesquisa e a disponibilidade de cada livro.</li>
+	   </ul>   
+      </p>
+    </div>
+    {% endblock %}
+  </body>
+</html>

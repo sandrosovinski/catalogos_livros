@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  {% extends "acesso.html" %}
+  <body>
+     <div id="contetn-cadastro" class="content-cadastro" align="center">
+     {% block content %}
+         {% for form in forms %}
+         Erro = {{ form['msg'] }}
+	 {% endfor %}
+     {% endblock %}
+     </div>
+  </body>
+</html>

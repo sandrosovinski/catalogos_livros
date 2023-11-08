@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% block head %}	
+<!--  <head>
+    <meta charset="utf-8">
+    <title>{% block title %} {% endblock %}</title>
+</head>-->
+  {% endblock %}
+  <body>
+    {% extends "index.html" %}
+    {% block content %}
+    <div> 
+    <h1 class="logo"> Acesso ao Sistema de Catálogos de Livros</h1>
+	<div>
+           <nav id="menu-h-a">
+             <ul>
+	       <li><a href="{{ url_for('cadastrar') }}">Cadastrar</a></li>
+	       <li><a href="{{ url_for('disponibilidade') }}">Disponibilidade</a></li>
+	       <li><a href="{{ url_for('pesquisar') }}">Pesquisar</a></li>
+	     </ul>
+           </nav>
+        <div>
+    </div>	
+    {% endblock %}
+  </body>
+</html>

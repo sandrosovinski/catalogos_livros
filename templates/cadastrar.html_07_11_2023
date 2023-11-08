@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  {% extends "acesso.html" %}
+  <body>
+       {% for field, errors in form.errors.items() %}
+       {{ ', '.join(errors) }}
+       {% endfor %}
+    {% block content %} 
+    <div id="content-cadastro" class="content-cadastro">
+    <form method="POST" align="center" action="">
+       {{ form.csrf_token() }}
+       <table id="cadastro" class="cadastro">
+	<tr>
+	  <th colspan="2" align="center"> Cadastro de Livros </th>
+	</tr>
+	<tr>
+	   <td>{{ form.titulo.label }}</td>
+	   <td>{{ form.titulo }}</td>
+	</tr>
+	<tr>
+	   <td>{{ form.autor.label }}</td>
+	   <td>{{ form.autor }}</td>
+	</tr>
+	<tr>
+	   <td>{{ form.exemplares.label }}</td>
+	   <td>{{ form.exemplares }}</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">{{ form.submit(class="btn btn-primary") }}</td>
+	</tr>
+       </table>
+    </form>	    
+    </div>
+    {% endblock %}
+  </body>
+</html>

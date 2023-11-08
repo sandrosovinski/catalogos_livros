@@ -1,0 +1,39 @@
+/*
+* {
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+*/
+#menu-h {
+  background-color: #0D122B;
+}
+
+#menu-h ul {
+  max-width: 1000px;
+  list-style: none;
+  padding: 0;
+  text-align: auto;
+}
+
+#menu-h ul li {
+  display: inline;
+}
+
+#menu-h ul li a {
+  color: #FFF;
+  padding: 20px;
+  display: inline-block;
+  text-decoration: none;
+  transition: background .4s;
+}
+
+#menu-h ul li a:hover {
+  background: rgb(24,139,233);
+}  
+
+#menu-h ul li:last-child a {
+  float: right;
+  background-color: rgb(24,139,233);
+}  

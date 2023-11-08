@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  {% extends "acesso.html" %}
+  <body>
+    {% block content %}
+        <div id="content-cadastro" class="content-cadastro">
+	    Cadastro Realizado com Sucesso.
+	    {% for post in posts %}
+                {{ post['Titulo'] }}
+                {{ post['Autor'] }}
+                {{ post['Exemplares'] }}
+	    {% endfor %}
+	</div>    
+    {% endblock %}
+  </body>
+</html>

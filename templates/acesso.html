@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+  {% extends 'index.html' %}
+    {% block menu %}	  
+    <nav id="menu-h-a">
+      <ul>
+        <li><a href="{{ url_for('cadastrar') }}">Cadastrar</a></li>
+	<li><a href="{{ url_for('disponibilidade') }}">Disponibilidade</a></li>
+	<li><a href="{{ url_for('pesquisar') }}">Pesquisar</a></li>
+	<li><a href="{{ url_for('index') }}">Voltar</a></li>
+      </ul>
+    </nav>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}

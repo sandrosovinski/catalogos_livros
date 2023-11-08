@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    {% extends "acesso.html" %}
+  <body>
+    {% block content %}
+    <div id="content-cadastro" class="content-cadastro">
+        <table id="cadastro" class="cadastro">
+            <tr>
+		<th colspan="4">Disponibilidade de Livros</th>
+	    </tr>
+	    <tr>
+		<td>Id</td>
+		<td>Título</td>
+		<td>Autor</td>
+		<td>Exemplares</td>
+	    </tr>	
+	{%for post in posts %}
+	    <tr>
+                <td>{{ post['Id'] }}</td>
+		<td>{{ post['Titulo'] }}</td>
+		<td>{{ post['Autor'] }}</td>
+		<td>{{ post['Exemplares'] }}</td>
+	    </tr>	
+	{% endfor %}
+	</table>
+    </div>	
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  {% extends 'index.html' %}
+  {% block head %}{{ super() }}{% endblock %}
+  <body>
+    {% block content %}
+    <p> Neste projeto, os alunos criarão um catálogo de livros em Python. A aplicação inclui as seguintes etapas:</p>
+    <ul >
+       <li class="a"> Cadastro de Livros:</li>
+          <ul>
+             <li class="b"> Os usuários poderão cadastrar livros, incluindo título, autor e número de exemplares disponíveis.</li>
+          </ul>
+       </li>
+       <li class="a"> Validação de Disponibilidade:</li>
+          <ul>
+	     <li class="b"> A aplicação verificará se o número de exemplares disponíveis é um valor válido e maior que zero. </li>
+          </ul>
+       <li class="a"> Pesquisa de Livros:</li>
+          <ul>
+	     <li class="b"> Os usuários poderão pesquisar livros por título ou autor.</li>
+	     <li class="b"> A aplicação exibirá os resultado da pesquisa e a disponobilidade de cada livro.</li>
+          </ul>
+    </ul>
+    {% endblock %}
+  </body>
+</html>

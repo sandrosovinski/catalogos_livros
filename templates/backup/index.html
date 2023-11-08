@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+ <head>
+   {% block head %}
+   <meta charset="utf-8">
+   <title>Catálago de Livros</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style_menu.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style_menu_acesso.css') }}">
+   {% endblock %}
+ </head>
+ <body>
+    <header>
+      {% block header %}
+      <div>
+      <h1 class="logo">Catálagos de Livros</h1>
+      <p></p>
+        <nav id="menu-h">
+          <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('acesso') }}">Acesso</a></li>
+            <li><a href="{{ url_for('about') }}">Sobre</a></li>
+          </ul>
+        </nav>
+      </div>
+      {% endblock %}
+    </header>
+      {% block content %}
+      {% endblock %}
+ </body>
+</html>
