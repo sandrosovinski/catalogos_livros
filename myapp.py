@@ -67,29 +67,41 @@ def cadastrar():
         conn.close()
     return render_template("cadastrar.html", form=form)
 
+#Classe p´ginas de resultado
+class PageResult:
+   def __init__(self, data, page = 1, number = 10):
+     self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
+     self.full_listing = [self.data[i:i+number] for i in range(0, len(self.data), number)]
+   def __iter__(self):
+     for i in self.full_listing[self.page-1]:
+       yield i
+   def __repr__(self): #usado para linkar as página
+     return "/disponibilidade/{}".format(self.page+1) #usado para ver a próxima página
+   
 #Pagina para disponibilidade de livros no aplicativo
-@app.route("/disponibilidade", methods=['GET'])
-def disponibilidade():
+@app.route("/disponibilidade/<pagenum>", methods=['GET'])
+def disponibilidade(pagenum):
     conn = conecta_db()
     posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros ORDER BY Titulo').fetchall()
     conn.close()
-    return render_template("disponibilidade.html", posts=posts)
+    item_list = posts
+    return render_template("disponibilidade.html", listing = PageResult(item_list, pagenum), posts=posts)
 
 #Pagina para pesquisar livros ou autores
 @app.route("/pesquisar")
 def pesquisar():
-    if titulo :
-        conn = conecta_db()
-        posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros where Titulo ? ORDER BY Titulo', (titulo)).fetchall()
-        conn.close()
-        return render_template("pesquisar", posts=posts)
-    if autor :
-        conn = conecta_db()
-        posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros where Autor ? ORDER BY Autor', (autor)).fetchall()
-        conn.close()
-        return render_template("pesquisar", posts=posts)
+#    if titulo :
+#        conn = conecta_db()
+#        posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros where Titulo ? ORDER BY Titulo', (titulo)).fetchall()
+#        conn.close()
+#        return render_template("pesquisar", posts=posts)
+#    if autor :
+#        conn = conecta_db()
+#        posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros where Autor ? ORDER BY Autor', (autor)).fetchall()
+#        conn.close()
+#        return render_template("pesquisar", posts=posts)
 
-    return render_template("pesquisar.html")
+#    return render_template("pesquisar.html")
 
 if __name__ == "__main__":
     from waitress import server
