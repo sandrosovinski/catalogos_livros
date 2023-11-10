@@ -2,14 +2,38 @@
 # Conteudo do arquivo `myapp.py`
 #
 from flask import Flask, render_template, request, redirect, flash, url_for
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length, ValidationError
+#from flask_wtf import FlaskForm
+from flask_sqlalchemy import SQLAlchemy
+#from wtforms import StringField, SubmitField, IntegerField
+#from wtforms.validators import DataRequired, Length, ValidationError
 import sqlite3
 
 app = Flask(__name__)
+app.debug = True
 app.secret_key = 'djhfjdhfdkfheirweuryeuryei'
 
+#Adicionando configurações para uso do banco de dados sqlite
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///catalogos_livros.db'
+
+#Criando o SQLAlchemy instância
+db = SQLAlchemy(app)
+
+# Modelo
+class Profile(db.Model):
+    # Id: Campo que armazena Id exclusivo para cada linha da tabela no Banco de Dados.
+    # Titulo: Usado para armazenar o Título do Livro na tabela catalogos_livros
+    # Autor: Usado para armazenar o Autor do Livro na tabela catalogos_livros
+    # Exemplares: Usado para armazenar a quantidade de Exemplares de Livros na tabela catalogos_livros
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(255), unique=False, nullable=False)
+    autor = db.Column(db.String(255), unique=False, nullable=False)
+    exemplares = db.Column(db.Integer, nullable=False)
+  
+    # repr method repersents how one object of this datatable
+    # will look like
+    def __repr__(self):
+        return f"Título do Livro: {self.titulo}, Autor do Livro: {self.autor}, Exemplares: {self.exemplares}"
+  
 #Pagina inicial do aplicativo
 @app.route("/")
 def index():
@@ -30,15 +54,16 @@ def sobre():
     return render_template("sobre.html")
 
 #Classe para criação do formulário de cadastro de livros
-class CreateCadastroForm(FlaskForm):
+#class CreateCadastroForm(FlaskForm):
     #titulo = StringField(label=('Titulo do Livro:'), validators=[DataRequired(), Length(max=255)])
     #autor = StringField(label=('Autor do Livro:'), validators=[DataRequired(), Length(max=255)])
     #exemplares = IntegerField(label=('Exemplares:'), validators=[DataRequired(), Length(max=4)])
     #submit = SubmitField(label=('Cadastrar'))
-    titulo = StringField(label=('Titulo do Livro:'))
-    autor = StringField(label=('Autor do Livro:'))
-    exemplares = IntegerField(label=('Exemplares:'))
-    submit = SubmitField(label=('Cadastrar'))
+#    titulo = StringField(label=('Titulo do Livro:'))
+#    autor = StringField(label=('Autor do Livro:'))
+#    exemplares = IntegerField(label=('Exemplares:'))
+#    submit = SubmitField(label=('Cadastrar'))
+
 
 #Conexão com banco de dados
 def conecta_db():
@@ -67,25 +92,16 @@ def cadastrar():
         conn.close()
     return render_template("cadastrar.html", form=form)
 
-#Classe p´ginas de resultado
-class PageResult:
-   def __init__(self, data, page = 1, number = 10):
-     self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
-     self.full_listing = [self.data[i:i+number] for i in range(0, len(self.data), number)]
-   def __iter__(self):
-     for i in self.full_listing[self.page-1]:
-       yield i
-   def __repr__(self): #usado para linkar as página
-     return "/disponibilidade/{}".format(self.page+1) #usado para ver a próxima página
-   
 #Pagina para disponibilidade de livros no aplicativo
-@app.route("/disponibilidade/<pagenum>", methods=['GET'])
-def disponibilidade(pagenum):
-    conn = conecta_db()
-    posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros ORDER BY Titulo').fetchall()
-    conn.close()
-    item_list = posts
-    return render_template("disponibilidade.html", listing = PageResult(item_list, pagenum), posts=posts)
+@app.route("/disponibilidade")
+def disponibilidade():
+    #page = request.args.get('page', 1, type=int)
+    posts = Profile.query.all()
+    #conn = conecta_db()
+    #posts = conn.execute('SELECT Id,Titulo,Autor,Exemplares FROM catalogos_livros ORDER BY Titulo').paginate
+    #pagenum = conn.fetchall()
+    #conn.close()
+    return render_template("disponibilidade.html", posts=posts)
 
 #Pagina para pesquisar livros ou autores
 @app.route("/pesquisar")
@@ -101,8 +117,8 @@ def pesquisar():
 #        conn.close()
 #        return render_template("pesquisar", posts=posts)
 
-#    return render_template("pesquisar.html")
+    return render_template("pesquisar.html")
 
 if __name__ == "__main__":
-    from waitress import server
-    app.run(host='0.0.0.0', port=8080, debug=True)
+#    from waitress import server
+    app.run(host='0.0.0.0', port=8080)
